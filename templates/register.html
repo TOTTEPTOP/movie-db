@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 80px auto; padding: 20px; }
+        input { width: 100%; padding: 8px; margin: 5px 0 15px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .error { color: red; margin-bottom: 10px; }
+        a { color: #4a90e2; }
+    </style>
+</head>
+<body>
+    <h1>Регистрация</h1>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="POST">
+        <label>Логин:</label>
+        <input name="username" required>
+        <label>Пароль:</label>
+        <input name="password" type="password" required>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+    <p><a href="/">← На главную</a></p>
+</body>
+</html>
