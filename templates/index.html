@@ -5,23 +5,57 @@
     <title>Каталог фильмов</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 900px; margin: 30px auto; padding: 20px; }
-        h1 { margin-bottom: 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        nav a { margin-left: 15px; text-decoration: none; color: #4a90e2; }
+        nav span { margin-left: 15px; color: #666; }
+        .toolbar { margin-bottom: 15px; }
+        .toolbar a { padding: 5px 12px; border: 1px solid #ccc; border-radius: 5px; text-decoration: none; color: #333; margin-right: 10px; }
+        .toolbar a.active { background: #4a90e2; color: white; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
         th { background: #f5f5f5; }
         .rating { font-weight: bold; color: #e67e22; }
+        .fav-btn { text-decoration: none; font-size: 20px; }
     </style>
 </head>
 <body>
-    <h1>Каталог фильмов</h1>
+    <header>
+        <h1>Каталог фильмов</h1>
+        <nav>
+            {% if session.username %}
+                <span>Привет, {{ session.username }}</span>
+                <a href="/logout">Выйти</a>
+            {% else %}
+                <a href="/login">Войти</a>
+                <a href="/register">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% if session.username %}
+    <div class="toolbar">
+        <a href="/" class="{% if not show_fav %}active{% endif %}">Все фильмы</a>
+        <a href="/?fav=1" class="{% if show_fav %}active{% endif %}">Избранное</a>
+    </div>
+    {% endif %}
+
     <table>
-        <tr><th>Название</th><th>Жанр</th><th>Год</th><th>Рейтинг</th></tr>
+        <tr><th>Название</th><th>Жанр</th><th>Год</th><th>Рейтинг</th><th></th></tr>
         {% for m in movies %}
         <tr>
             <td>{{ m.title }}</td>
             <td>{{ m.genre }}</td>
             <td>{{ m.year }}</td>
             <td class="rating">{{ m.rating }}</td>
+            <td>
+                {% if session.username %}
+                    {% if m.id in fav_ids %}
+                        <a href="/fav/{{ m.id }}" class="fav-btn">⭐</a>
+                    {% else %}
+                        <a href="/fav/{{ m.id }}" class="fav-btn">☆</a>
+                    {% endif %}
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>
