@@ -28,3 +28,6 @@
 ## Тестовые данные
 - Логин: `test`
 - Пароль: `123`
+
+
+<img width="1184" height="640" alt="Анимация" src="https://github.com/user-attachments/assets/f55f6534-6863-4125-87d9-7b42d57b319b" />
