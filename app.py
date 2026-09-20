@@ -35,6 +35,10 @@ def init_db():
             ('Гладиатор', 'Боевик', 2000, 8.5),
         ]
         conn.executemany("INSERT INTO movies (title, genre, year, rating) VALUES (?, ?, ?, ?)", movies)
+    cur = conn.execute("SELECT COUNT(*) FROM users WHERE username='test'")
+    if cur.fetchone()[0] == 0:
+        test_pass = hashlib.sha256('test'.encode()).hexdigest()
+        conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('test', test_pass))
     conn.commit()
     conn.close()
 
