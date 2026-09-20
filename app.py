@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import hashlib
+import os
 
 app = Flask(__name__)
 app.secret_key = 'movie_secret_key_2026'
 
 
 def get_db():
-    conn = sqlite3.connect('movies.db')
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'movies.db')
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
@@ -15,9 +17,9 @@ def get_db():
 
 def init_db():
     conn = get_db()
-    with open('schema.sql', 'r', encoding='utf-8') as f:
+    schema_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
+    with open(schema_path, 'r', encoding='utf-8') as f:
         conn.executescript(f.read())
-    conn.commit()
     cur = conn.execute("SELECT COUNT(*) FROM movies")
     if cur.fetchone()[0] == 0:
         movies = [
