@@ -1,1 +1,29 @@
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог фильмов</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 30px auto; padding: 20px; }
+        h1 { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: #f5f5f5; }
+        .rating { font-weight: bold; color: #e67e22; }
+    </style>
+</head>
+<body>
+    <h1>Каталог фильмов</h1>
+    <table>
+        <tr><th>Название</th><th>Жанр</th><th>Год</th><th>Рейтинг</th></tr>
+        {% for m in movies %}
+        <tr>
+            <td>{{ m.title }}</td>
+            <td>{{ m.genre }}</td>
+            <td>{{ m.year }}</td>
+            <td class="rating">{{ m.rating }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
